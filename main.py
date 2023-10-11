@@ -1,14 +1,18 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-import uuid
+from fastapi import FastAPI
 
 #importing routers
 import routers.router_students
 
+# Documentation
+from documentation.description import api_description
+from documentation.tags import tags_metadata
+
 #api init (launch with uvicorn main:api --reload)
-api = FastAPI(
-    title="e4 api backend"
-)
+api = FastAPI( 
+    title="Watches API",
+    description=api_description,
+    openapi_tags=tags_metadata # tagsmetadata definit au dessus
+    )
 
 api.include_router(routers.router_students.router)
 
