@@ -47,13 +47,13 @@ async def student_update(student_id: str, student: StudentNoID):
 
 # 4. Exercice (10min) DELETE Student
 #connecter la vraie DB (10 min)
-@router.delete("/{student_id}", status_code=202, response_model=None)
+@router.delete("/{student_id}", status_code=202, response_model=str)
 async def student_delete(student_id) :
     queryResult = db.child('students').child(student_id).get().val()
     if not queryResult : 
         raise HTTPException(status_code=404, detail="Student not found")
     db.child('students').child(student_id).remove()
-    return {"message": "Student deleted"}
+    return "Student deleted"
 
 
 #'Students' auront des 'Attendances' pour des 'Sessions'
