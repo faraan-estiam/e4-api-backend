@@ -11,7 +11,7 @@ router = APIRouter(
 )
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='auth/login')
-def get_curent_user(provided_token: str = Depends(oauth2_scheme)):
+def get_current_user(provided_token: str = Depends(oauth2_scheme)):
     decoded_token = auth.verify_id_token(provided_token)
     decoded_token['idToken'] = provided_token
     return decoded_token
@@ -38,5 +38,5 @@ async def create_swagger_token(user_credentials: OAuth2PasswordRequestForm = Dep
         raise HTTPException(status_code=401, detail='Invalid credentials')
 
 @router.get('/me')
-def secure_endpoint(user_data: int = Depends(get_curent_user)):
+def secure_endpoint(user_data: int = Depends(get_current_user)):
     return user_data
