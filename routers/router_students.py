@@ -18,15 +18,17 @@ async def get_student():
 # 1. Exercice (10min) Create new Student: POST
 @router.post("/", status_code=201, response_model=Student)
 async def create_student(student_name: str):
-    newStudent = Student (id=uuid4(), name=student_name)
+    generatedId=str(uuid4())
+    newStudent = Student (id=generatedId, name=student_name)
     students.append(newStudent)
+    db.child("students").child(generatedId).set(newStudent.model_dump())
     return newStudent
 
 # 2. Exercice (10min) Student GET by ID
 @router.get("/{student_id}", response_model=Student)
 async def get_student_by_id(student_id: str):
     for student in students :
-        if str(student.id)==student_id:
+        if student.id==student_id:
             return student
     raise HTTPException(status_code=404, detail="Student not found")
 # 3. Exercice (10min) PATCH Student (name)
@@ -34,7 +36,7 @@ async def get_student_by_id(student_id: str):
 @router.patch("/{student_id}", response_model=Student)
 async def student_update(student_id: str, student_name: str):
     for student in students :
-        if str(student.id)==student_id:
+        if student.id==student_id:
             student.name = student_name
             return student
     raise HTTPException(status_code=404, detail="Student not found")
@@ -43,7 +45,7 @@ async def student_update(student_id: str, student_name: str):
 @router.delete("/{student_id}", status_code=202, response_model=None)
 async def student_delete(student_id) :
     for student in students:
-        if str(student.id)==student_id:
+        if student.id==student_id:
             students.remove(student)
             return
     raise HTTPException(status_code=404, detail="Student not found")
