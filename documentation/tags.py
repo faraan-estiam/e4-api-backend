@@ -3,5 +3,9 @@ tags_metadata = [
     {
         "name": "Students",
         "description": "Create and list students of our API",
+    },
+    {
+        "name": "Auth",
+        "description": "Authenticate a User"
     }
 ]
