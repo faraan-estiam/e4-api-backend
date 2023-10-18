@@ -1,6 +1,7 @@
 from uuid import uuid4
 from fastapi import APIRouter, HTTPException
 from classes.database import Student, students
+from database.firebase import db
 
 #api init (launch with uvicorn main:api --reload)
 router = APIRouter(
