@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from classes.models import Student, StudentNoID
 from database.firebase import db
 from routers.router_auth import get_current_user
+from routers.router_stripe import increment_stripe
 
 #api init (launch with uvicorn main:api --reload)
 router = APIRouter(
@@ -26,6 +27,7 @@ async def get_student(user_data: int= Depends(get_current_user)):
 async def create_student(student: StudentNoID, user_data: int= Depends(get_current_user)):
     generatedId=str(uuid4())
     newStudent = Student (id=generatedId, name=student.name)
+    increment_stripe(user_data['uid'])
     db.child('users').child(user_data['uid']).child("students").child(generatedId).set(data=newStudent.model_dump(), token=user_data['idToken'])
     return newStudent
 
