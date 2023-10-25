@@ -13,8 +13,9 @@ from documentation.tags import tags_metadata
 api = FastAPI( 
     title="Watches API",
     description=api_description,
-    openapi_tags=tags_metadata # tagsmetadata definit au dessus
-    )
+    openapi_tags=tags_metadata, # tagsmetadata definit au dessus
+    docs_url='/'
+)
 
 api.include_router(routers.router_students.router)
 api.include_router(routers.router_auth.router)
