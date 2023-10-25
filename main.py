@@ -3,6 +3,7 @@ from fastapi import FastAPI
 #importing routers
 import routers.router_students
 import routers.router_auth
+import routers.router_stripe
 
 # Documentation
 from documentation.description import api_description
@@ -17,6 +18,8 @@ api = FastAPI(
 
 api.include_router(routers.router_students.router)
 api.include_router(routers.router_auth.router)
+api.include_router(routers.router_stripe.router)
+
 # Reste à faire 
 # X Sortir mon student's router dans un dossier "routers"
 # X Rédiger une documentation et l'ajouter à mon app FastAPI()
