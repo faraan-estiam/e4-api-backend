@@ -19,7 +19,7 @@ router = APIRouter(
 
 YOUR_DOMAIN = 'http://localhost'
 
-@router.post('/checkout')
+@router.get('/checkout')
 async def stripe_checkout():
     try:
         checkout_session = stripe.checkout.Session.create(
@@ -35,8 +35,8 @@ async def stripe_checkout():
             success_url = YOUR_DOMAIN+'/success.html',
             cancel_url = YOUR_DOMAIN+'/cancel.html'
         )
-        response = RedirectResponse(url=checkout_session['url'])
-        return checkout_session['url']
+        response = RedirectResponse(checkout_session['url'])
+        return response
     except Exception as e:
         return str(e)
     
