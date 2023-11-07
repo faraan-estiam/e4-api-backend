@@ -27,7 +27,7 @@ async def get_student(user_data: int= Depends(get_current_user)):
 async def create_student(student: StudentNoID, user_data: int= Depends(get_current_user)):
     generatedId=str(uuid4())
     newStudent = Student (id=generatedId, name=student.name)
-    increment_stripe(user_data['uid'])
+    #increment_stripe(user_data['uid']) FIX THIS
     db.child('users').child(user_data['uid']).child("students").child(generatedId).set(data=newStudent.model_dump(), token=user_data['idToken'])
     return newStudent
 
